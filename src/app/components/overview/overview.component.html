@@ -1,3 +1,36 @@
-<p>
-  overview works!
-</p>
+<div class="container">
+  <app-head></app-head>
+
+  <div class="overview shadow-sm">
+    <div class="row">
+      <div class="col-4" *ngFor="let stream of streams;">
+        <div class="stream-box shadow-sm">
+          <img src="{{stream.thumb}}" alt="Camerafootage">
+          <div class="stream-overlay">
+            <div (click)="addToSelectedStreams(stream)" class="username">{{stream.name}}</div>
+            <div class="viewstats">
+              <div class="viewcount"><i class="material-icons">people</i>{{stream.viewCount}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="selected-streams-overlay shadow-sm">
+  <div class="row">
+    <div class="col-3" *ngFor="let stream of selectedStreams;">
+      <div class="stream-box shadow-sm">
+        <i (click)="removeFromSelectedStreams(stream)" class="material-icons close-button">close</i>
+        <img src="{{stream.thumb}}" alt="Camerafootage">
+        <div class="stream-overlay">
+          <div class="username">{{stream.name}}</div>
+          <div class="viewstats">
+            <div class="viewcount"><i class="material-icons">people</i>{{stream.viewCount}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

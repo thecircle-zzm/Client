@@ -6,6 +6,7 @@ import { Message } from '../../models/message'
 @Component({
     selector: 'chat-component',
     templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss']
 })
 
 export class ChatComponent implements OnInit, OnDestroy {
@@ -26,16 +27,17 @@ export class ChatComponent implements OnInit, OnDestroy {
     ngOnDestroy(){
       this.mSub.unsubscribe();
     }
-    send(){
-      if(this.text == ''){
-        alert("Nope, please put in a text")
-      } else{
-        let m = new Message();
-
-        m.username = this.username;
-        m.text = this.text;
-        m.chat = this.chatId;
-        this.mService.send(m);
-      }
+  send(){
+    if(this.text == ''){
+      alert("Nope, please put in a text")
+    } else{
+      let m = new Message();
+        
+      m.username = this.username;
+      m.text = this.text;
+      m.chat = this.chatId;
+      this.text = '';
+      this.mService.send(m);
     }
+  }
 }

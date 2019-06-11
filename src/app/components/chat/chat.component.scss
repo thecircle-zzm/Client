@@ -1,0 +1,9 @@
+@import '../../../assets/scss/colors.scss', '../../../assets/scss/fonts.scss';
+.blackText{
+    color: $eerie-black;
+    font-family: $roboto;
+}
+.sticky-bottom{
+    position: sticky;
+    bottom:0;
+}

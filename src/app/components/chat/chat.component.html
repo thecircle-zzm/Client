@@ -1,9 +1,9 @@
-<div>
-  <form>
-    <input name="text" [(ngModel)]="text" placeholder="Send a Message">
-    <button (click)="send()">Send</button>
+<div class="container">
+  <ul class="list-group" *ngFor="let chat of this.messages">
+    <li class="list-group-item list-group-item-danger"><b>{{chat.username}} :</b>{{chat.text}}</li>
+  </ul>
+  <form class="fixed-bottom form-group">
+    <input  class="form-control-lg" name="text" [(ngModel)]="text" placeholder="Send a Message">
+    <button class="form-control-sm btn btn-danger"(click)="send()">Send</button>
   </form>
-  <div *ngFor="let chat of this.messages">
-    <b>{{chat.username}} :</b> <p>{{chat.text}}</p>
-  </div>
 </div>

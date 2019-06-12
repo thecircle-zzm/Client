@@ -5,6 +5,9 @@ import { Stream } from '../../models/stream';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+import { DataService } from '../../services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 declare var $: any;
 
 @Component({
@@ -19,7 +22,11 @@ export class OverviewComponent implements OnInit {
 
   message: string;
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public dataService: DataService
+  ) {
   }
 
   ngOnInit() {
@@ -73,6 +80,11 @@ export class OverviewComponent implements OnInit {
       }
 
     }
+  }
+
+  navigateToStream():void {
+    this.dataService.streamData = this.selectedStreams;
+    this.router.navigate(['/stream']);
   }
 
 }

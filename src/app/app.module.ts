@@ -13,6 +13,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { HeadComponent } from './components/head/head.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { PlayerComponent } from './components/player/player.component';
+import { DataService } from './services/data.service';
 
 // const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
@@ -33,7 +34,7 @@ import { PlayerComponent } from './components/player/player.component';
     NgbModule,
     // SocketIoModule.forRoot(config)
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

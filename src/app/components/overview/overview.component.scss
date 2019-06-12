@@ -80,78 +80,84 @@
   bottom: 0;
   background: $deep-carmine-pink;
   color: $white;
-  max-height: 15em;
+  min-height: 16em;
   box-sizing: border-box;
   z-index: 5;
 
-  .row {
-    margin: 0.5em auto;
-    padding: 1em 0;
-    box-sizing: border-box;
-    width: 60%;
+  .container {
+    .row {
+      margin: 0.5em auto;
+      box-sizing: border-box;
+      width: 100%;
 
-    .col-3 {
-      border-radius: 3px;
-      padding: 1em;
+      .btn-overview {
+        position: responsive;
+        margin: 0 auto;
+      }
 
-      .stream-box {
-        position: relative;
-        box-sizing: border-box;
-        border-radius: 5px;
-        overflow: hidden;
+      .col-3 {
+        border-radius: 3px;
+        padding: 1em;
 
-        .close-button {
-          position: absolute;
-          top: 0.25em;
-          right: 0.25em;
-          z-index: 9000;
-          cursor: pointer;
-        }
-
-        img {
-          width: 100%;
-          height: 10em;
+        .stream-box {
+          position: relative;
+          box-sizing: border-box;
           border-radius: 5px;
-          cursor: pointer;
-        }
+          overflow: hidden;
 
-        .stream-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          width: 100%;
-          height: 4em;
-          line-height: 4em;
-          background: $transparent-black-50;
-          padding: 0 1em;
-
-          .username {
-            font-family: $roboto;
-            font-weight: 600;
-            font-size: 1.5em;
-            display: inline-block;
-            vertical-align: middle;
+          .close-button {
+            position: absolute;
+            top: 0.25em;
+            right: 0.25em;
+            z-index: 9000;
             cursor: pointer;
           }
 
-          .viewstats {
-            float: right;
+          img {
+            width: 100%;
+            height: 10em;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+
+          .stream-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
             height: 4em;
             line-height: 4em;
+            background: $transparent-black-50;
+            padding: 0 1em;
 
-            .viewcount {
+            .username {
               font-family: $roboto;
               font-weight: 600;
               font-size: 1.5em;
               display: inline-block;
               vertical-align: middle;
+              cursor: pointer;
             }
 
-            i {
-              margin: -5px 0.25em 0 0;
-              font-size: 30px;
-              vertical-align: middle;
+            .viewstats {
+              float: right;
+              height: 4em;
+              line-height: 4em;
+
+              .viewcount {
+                font-family: $roboto;
+                font-weight: 600;
+                font-size: 1.5em;
+                display: inline-block;
+                vertical-align: middle;
+              }
+
+              i {
+                margin: -5px 0.25em 0 0;
+                font-size: 30px;
+                vertical-align: middle;
+              }
             }
           }
         }

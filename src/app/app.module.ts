@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -31,8 +32,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
     SocketIoModule.forRoot(config)
-
   ],
   providers: [],
   bootstrap: [AppComponent]

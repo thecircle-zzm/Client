@@ -1,11 +1,21 @@
-<div class="container-fluid">
-  <ul class="row fixed top list-group" *ngFor="let chat of this.messages">
-    <li class="list-group-item blackText"><b>{{chat.username}}: </b>{{chat.text}}</li>
-  </ul>
-  <form class="fixed-bottom input-group">
-    <input  class="blackText form-control" type="text"name="text" [(ngModel)]="text" placeholder="Send a Message">
-    <span class="input-group-btn">
-      <button class="sm btn btn-danger"(click)="send()">Send</button>
-    </span>
-  </form>
+<div class="container">
+    <ul class="col list-group overflow-auto" id="itemList" scroll-glue>
+      <li class="list-group-item blackText " *ngFor="let chat of this.messages"><b>{{chat.username}}: </b>{{chat.text}}</li>
+    </ul>
+      <form class="input-group">
+        <input  class="blackText form-control" type="text"name="text" [(ngModel)]="text" placeholder="Send a Message">
+        <span class="input-group-btn">
+          <button class="sm btn btn-danger"(click)="send()">Send</button>
+        </span>
+      </form>
 </div>
+
+<div class="modal">
+    <div class="container">
+      <div class="modal-top">Alert<i (click)="closeModal()" class="material-icons close-button">close</i></div>
+      <div class="modal-body">
+        <p>{{errorMessage}}</p>
+        <button type="button" (click)="closeModal()" class="btn btn-danger btn-center">Warning</button>
+      </div>
+    </div>
+  </div>

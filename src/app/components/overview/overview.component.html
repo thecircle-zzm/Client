@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-4" *ngFor="let stream of streams;">
         <div class="stream-box shadow-sm">
-          <img src="{{stream.thumb}}" alt="Camerafootage">
+          <img (click)="addToSelectedStreams(stream)" src="{{stream.thumb}}" alt="Camerafootage">
           <div class="stream-overlay">
             <div (click)="addToSelectedStreams(stream)" class="username">{{stream.name}}</div>
             <div class="viewstats">

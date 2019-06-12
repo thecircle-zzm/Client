@@ -7,6 +7,8 @@ import { Stream } from 'src/app/models/stream';
 
 import { STREAMS } from '../../mock/streams.mock';
 
+declare var $: any;
+
 @Component({
   selector: 'app-stream',
   templateUrl: './stream.component.html',

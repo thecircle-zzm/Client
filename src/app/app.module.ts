@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DataService } from './services/data.service';
 
-// const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DataService } from './services/data.service';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    // SocketIoModule.forRoot(config)
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

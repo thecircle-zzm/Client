@@ -3,7 +3,7 @@
   <div class="title">The Circle</div>
   <ul class="menu">
     <li><a routerLink="/overview"><i class="material-icons">home</i></a></li>
-    <li><a><input class="form-control" type="text" name="tosearch"  [(ngModel)]="toSearch" (change)="search()" [placeholder]="router.url"></a></li>
+    <li><a><input #box (keyup)="search(box.value)" class="form-control" type="text" name="tosearch" [placeholder]="router.url">{{toSearch}}</a></li>
     <li><a><i class="material-icons">exit_to_app</i></a></li>
   </ul>
 </div>

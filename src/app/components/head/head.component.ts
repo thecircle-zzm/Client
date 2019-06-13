@@ -8,13 +8,12 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./head.component.scss']
 })
 export class HeadComponent implements OnInit {
-  toSearch: string;
   constructor(public router: Router, private searchService: SearchService) { }
 
   ngOnInit() {
   }
 
-  search() {
-    this.searchService.setFilter(this.toSearch);
+  search(t:string) {
+    this.searchService.setFilter(t);
   }
 }

@@ -19,7 +19,7 @@
   </div>
   <div class="overview shadow-sm">
     <div class="row">
-      <div class="col-4" *ngFor="let stream of streams;">
+      <div class="col-4" *ngFor="let stream of limitedStreams;">
         <div class="stream-box shadow-sm">
           <img (click)="addToSelectedStreams(stream)" src="{{stream.thumb}}" alt="Camerafootage">
           <div class="stream-overlay">

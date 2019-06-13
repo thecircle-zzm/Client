@@ -6,6 +6,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Stream } from 'src/app/models/stream';
 
 import { STREAMS } from '../../mock/streams.mock';
+import { AlertService } from 'src/app/services/alert.service';
 
 declare var $: any;
 
@@ -16,7 +17,7 @@ declare var $: any;
 })
 export class StreamComponent implements OnInit {
 
-  streams: Stream[] = STREAMS;
+  streams: Stream[];
   selectedStreams: Stream[];
 
   message: string;
@@ -24,10 +25,12 @@ export class StreamComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public dataService: DataService
+    public dataService: DataService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
+    this.streams = this.dataService.getStreams();
     this.getSelectedStreams();
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {
       this.router.navigate(['/overview']);
@@ -35,24 +38,29 @@ export class StreamComponent implements OnInit {
   }
 
   addToSelectedStreams(stream: Stream): void {
-    if (this.selectedStreams.length < 4) {
-      if (!this.selectedStreams.find(x => x.id == stream.id)) {
-        this.selectedStreams.push(stream);
+    this.message = this.dataService.addToSelectedStreams(stream);
+    switch (this.message) {
+      case 'success': {
+        this.selectedStreams = this.dataService.getSelectedStreams();
+        break;
       }
-      else {
-        this.notifyUser('alreadySelected');
+      case 'alreadySelected': {
+        this.changeMessage(this.alertService.notifyUser('alreadySelected'));
+        break;
       }
-    } else {
-      this.notifyUser('moreThanFour');
+      case 'moreThanFour': {
+        this.changeMessage(this.alertService.notifyUser('moreThanFour'));
+        break;
+      }
     }
   }
 
   getSelectedStreams():void {
-    this.selectedStreams = this.dataService.streamData;
+    this.selectedStreams = this.dataService.getSelectedStreams();
   }
 
   removeFromSelectedStreams(stream: Stream): boolean {
-    this.selectedStreams.splice(this.selectedStreams.indexOf(stream), 1);
+    this.dataService.removeFromSelectedStreams(stream);
     return true;
   }
 
@@ -63,18 +71,6 @@ export class StreamComponent implements OnInit {
 
   closeModal() {
     $('.modal').hide();
-  }
-
-  notifyUser(messageType: string): void {
-    switch (messageType) {
-      case 'alreadySelected': {
-        this.changeMessage("You already selected this stream. Pick a different stream.");
-      }
-      case 'moreThanFour': {
-        this.changeMessage("You can only select a maximum of four streams. Deselect a stream before selecting another.");
-      }
-
-    }
   }
 
 }

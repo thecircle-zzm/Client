@@ -7,9 +7,11 @@
     position: sticky;
     bottom:0;
 }
-.container{
+.container-fluid{
     height: 50vh;
     max-height: 50vh;
+    background: $white;
+    padding: 0;
 }
 .list-group{
     max-width: inherit;

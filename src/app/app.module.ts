@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http'; 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [AuthenticationService, UserService],

@@ -1,0 +1,19 @@
+@import '../../../assets/scss/colors', '../../../assets/scss/fonts';
+
+.container {
+    margin-top: 5em;
+}
+
+.middle {
+    background-color: $vivid-auburn;
+    border-radius: 3px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+p {
+    font-family: $roboto;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: $white;
+}

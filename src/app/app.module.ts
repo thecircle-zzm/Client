@@ -2,7 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { AuthGuard } from './guards/auth.guard';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http'; 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +17,8 @@ import { ErrorComponent } from './components/error/error.component';
 import { HeadComponent } from './components/head/head.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { PlayerComponent } from './components/player/player.component';
+import { AuthenticationService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { DataService } from './services/data.service';
 import { SearchService } from './services/search.service';
 
@@ -35,12 +40,11 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [
-    DataService,
-    SearchService
-    ],
+  providers: [AuthGuard, AuthenticationService, UserService, DataService,
+    SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,7 +20,7 @@ declare var $: any;
 export class OverviewComponent implements OnInit {
 
   streams:Stream[] = STREAMS;
-  limitedStreams:Stream[];
+  filteredStreams:Stream[];
   selectedStreams:Stream[] = [];
 
   message: string;
@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit {
   ngOnInit() {
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
-    this.limitedStreams = this.streams;
+    this.filteredStreams = this.streams;
     /*this.streamService.getStreams().subscribe((incomingStreams)=>{
       incomingStreams.forEach(stream => {
         if(!this.streams.includes(stream)){
@@ -46,7 +46,7 @@ export class OverviewComponent implements OnInit {
       });
     })*/
     this.searchService.filter.subscribe((filter)=>{
-      this.limitedStreams = this.streams.filter(stream=>{
+      this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
       })
     })

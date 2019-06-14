@@ -20,7 +20,7 @@ export class StreamComponent implements OnInit {
 
   streams: Stream[] = STREAMS;
   selectedStreams: Stream[];
-  limitedStreams:Stream[];
+  filteredStreams:Stream[];
 
   message: string;
 
@@ -34,12 +34,12 @@ export class StreamComponent implements OnInit {
 
   ngOnInit() {
     this.getSelectedStreams();
-    this.limitedStreams = this.streams;
+    this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {
       this.router.navigate(['/overview']);
     }
     this.searchService.filter.subscribe((filter)=>{
-      this.limitedStreams = this.streams.filter(stream=>{
+      this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
       })
     })

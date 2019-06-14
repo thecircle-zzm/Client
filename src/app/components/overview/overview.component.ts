@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
+import { StreamService } from '../../services/stream.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -18,8 +19,10 @@ declare var $: any;
 })
 export class OverviewComponent implements OnInit {
 
-  streams:Stream[];
+  streams:Stream[] = STREAMS;
   filteredStreams:Stream[];
+  selectedStreams:Stream[] = [];
+  streams:Stream[];
   selectedStreams:Stream[];
 
   message: string;
@@ -27,6 +30,7 @@ export class OverviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private streamService: StreamService,
     private searchService: SearchService,
     private dataService: DataService,
     private alertService: AlertService
@@ -39,7 +43,13 @@ export class OverviewComponent implements OnInit {
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
     this.filteredStreams = this.streams;
-    this.streams = this.dataService.getStreams();
+    /*this.streamService.getStreams().subscribe((incomingStreams)=>{
+      incomingStreams.forEach(stream => {
+        if(!this.streams.includes(stream)){
+          this.streams.push(stream);
+        }
+      });
+    })*/
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;

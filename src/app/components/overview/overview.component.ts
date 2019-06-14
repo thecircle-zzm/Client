@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
 
   streams:Stream[] = [];
   filteredStreams:Stream[];
-  selectedStreams:Stream[] = [];
+  selectedStreams:Stream[];
 
   message: string;
 

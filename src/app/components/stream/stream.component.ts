@@ -5,11 +5,9 @@ import { DataService } from 'src/app/services/data.service';
 
 import { Stream } from 'src/app/models/stream';
 
-import { STREAMS } from '../../mock/streams.mock';
 import { AlertService } from 'src/app/services/alert.service';
 
 import { SearchService } from 'src/app/services/search.service';
-import { StreamService } from '../../services/stream.service'
 declare var $: any;
 
 @Component({
@@ -29,7 +27,6 @@ export class StreamComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dataService: DataService,
-    private streamService: StreamService,
     private searchService: SearchService,
     private alertService: AlertService
   ) { }

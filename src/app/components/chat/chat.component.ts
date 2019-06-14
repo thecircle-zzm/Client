@@ -6,7 +6,7 @@ import { Message } from '../../models/message'
 
 declare var $: any;
 @Component({
-    selector: 'chat-component',
+    selector: 'app-chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.scss']
 })

@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { STREAMS } from '../../mock/streams.mock';
 import { Stream } from '../../models/stream';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
+import { DataService } from '../../services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 declare var $: any;
 
@@ -14,39 +18,65 @@ declare var $: any;
 })
 export class OverviewComponent implements OnInit {
 
-  streams:Stream[] = STREAMS;
-  selectedStreams:Stream[] = [];
+  streams:Stream[] = [];
+  filteredStreams:Stream[];
+  selectedStreams:Stream[];
 
   message: string;
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private searchService: SearchService,
+    private dataService: DataService,
+    private alertService: AlertService
+  ) {
   }
 
   ngOnInit() {
+    this.dataService.clear();
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
+    this.filteredStreams = this.streams;
+    this.dataService.getStreams().subscribe((incomingStreams)=>{
+      incomingStreams.forEach(stream => {
+        if(!this.streams.includes(stream)){
+          this.streams.push(stream);
+        }
+      });
+    })
+    this.searchService.filter.subscribe((filter)=>{
+      this.filteredStreams = this.streams.filter(stream=>{
+        return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
+      })
+    })
   }
 
-  addToSelectedStreams(stream:Stream):void {
-    if (this.selectedStreams.length < 4){
-      if (!this.selectedStreams.find(x => x.id == stream.id)){
-        this.selectedStreams.push(stream);
-        this.showSelectedStreams();
+  addToSelectedStreams(stream: Stream): void {
+    this.message = this.dataService.addToSelectedStreams(stream);
+      switch(this.message){
+        case 'success': {
+          this.selectedStreams = this.dataService.getSelectedStreams();
+          this.showSelectedStreams();
+          break;
+        }
+        case 'alreadySelected': {
+          this.changeMessage(this.alertService.notifyUser('alreadySelected'));
+          break;
+        }
+        case 'moreThanFour': {
+          this.changeMessage(this.alertService.notifyUser('moreThanFour'));
+          break;
+        }
       }
-      else {
-        this.notifyUser('alreadySelected');
-      }
-    } else {
-      this.notifyUser('moreThanFour');
-    }
   }
 
   showSelectedStreams():void {
-    $('.selected-streams-overlay').show();
+    $('.selected-streams-overlay').fadeIn(100);
   }
 
   removeFromSelectedStreams(stream:Stream):boolean {
-    this.selectedStreams.splice(this.selectedStreams.indexOf(stream), 1);
+    this.dataService.removeFromSelectedStreams(stream);
     this.showSelectedStreams();
     if (this.selectedStreams.length == 0){
       $('.selected-streams-overlay').hide();
@@ -56,23 +86,15 @@ export class OverviewComponent implements OnInit {
 
   changeMessage(message:string) {
     this.message = message;
-    $('.modal').show();
+    $('.modal').fadeIn(300);
   }
 
   closeModal() {
     $('.modal').hide();
   }
 
-  notifyUser(messageType:string):void {
-    switch(messageType){
-      case 'alreadySelected': {
-        this.changeMessage("You already selected this stream. Pick a different stream.");
-      }
-      case 'moreThanFour': {
-        this.changeMessage("You can only select a maximum of four streams. Deselect a stream before selecting another.");
-      }
-
-    }
+  navigateToStream():void {
+    this.router.navigate(['/stream']);
   }
 
 }

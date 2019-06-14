@@ -19,6 +19,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PlayerComponent } from './components/player/player.component';
 import { AuthenticationService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { DataService } from './services/data.service';
+import { SearchService } from './services/search.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
@@ -41,7 +43,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [AuthGuard, AuthenticationService, UserService],
+  providers: [AuthGuard, AuthenticationService, UserService, DataService,
+    SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

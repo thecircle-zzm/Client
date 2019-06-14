@@ -19,7 +19,7 @@ declare var $: any;
 })
 export class StreamComponent implements OnInit {
 
-  streams: Stream[];
+  streams: Stream[] = [];
   selectedStreams: Stream[];
   filteredStreams:Stream[];
 
@@ -35,7 +35,13 @@ export class StreamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.streams = this.dataService.getStreams();
+    this.streamService.getStreams().subscribe((incomingStreams)=>{
+      incomingStreams.forEach(stream => {
+        if(!this.streams.includes(stream)){
+          this.streams.push(stream);
+        }
+      });
+    })
     this.getSelectedStreams();
     this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {

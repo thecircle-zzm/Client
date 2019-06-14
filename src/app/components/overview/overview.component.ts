@@ -19,11 +19,9 @@ declare var $: any;
 })
 export class OverviewComponent implements OnInit {
 
-  streams:Stream[] = STREAMS;
+  streams:Stream[] = [];
   filteredStreams:Stream[];
   selectedStreams:Stream[] = [];
-  streams:Stream[];
-  selectedStreams:Stream[];
 
   message: string;
 
@@ -43,13 +41,13 @@ export class OverviewComponent implements OnInit {
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
     this.filteredStreams = this.streams;
-    /*this.streamService.getStreams().subscribe((incomingStreams)=>{
+    this.streamService.getStreams().subscribe((incomingStreams)=>{
       incomingStreams.forEach(stream => {
         if(!this.streams.includes(stream)){
           this.streams.push(stream);
         }
       });
-    })*/
+    })
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;

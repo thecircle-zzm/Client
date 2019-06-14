@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { STREAMS } from '../mock/streams.mock';
 import { Stream } from '../models/stream';
 import { Injectable } from '@angular/core';
@@ -9,9 +9,7 @@ import { Injectable } from '@angular/core';
 export class StreamService {
     mockData = STREAMS;
 
-    getStreams() {
-        return new Observable<Stream[]>((observer)=>{
-            observer.next(this.mockData);
-        });
+    getStreams(): Observable<Stream[]> {
+        return of(this.mockData);
     }
 }

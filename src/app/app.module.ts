@@ -16,7 +16,6 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DataService } from './services/data.service';
 import { SearchService } from './services/search.service';
-import { StreamService } from './services/stream.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
@@ -40,8 +39,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
   ],
   providers: [
     DataService,
-    SearchService,
-    StreamService
+    SearchService
     ],
   bootstrap: [AppComponent]
 })

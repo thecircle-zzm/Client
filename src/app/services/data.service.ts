@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Stream } from '../models/stream';
 import { STREAMS } from '../mock/streams.mock';
+import { Observable, of } from 'rxjs'
 
 @Injectable()
 export class DataService {
@@ -29,8 +30,8 @@ export class DataService {
         this.selectedStreams.splice(this.selectedStreams.indexOf(stream), 1);
     }
 
-    getStreams(): Stream[] {
-        return this.streams;
+    getStreams(): Observable<Stream[]> {
+        return of(this.streams);
     }
 
     getSelectedStreams(): Stream[] {

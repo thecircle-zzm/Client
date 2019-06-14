@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { AuthGuard } from './guards/auth.guard';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http'; 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -39,7 +41,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [AuthenticationService, UserService],
+  providers: [AuthGuard, AuthenticationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

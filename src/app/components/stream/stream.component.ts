@@ -8,6 +8,8 @@ import { Stream } from 'src/app/models/stream';
 import { STREAMS } from '../../mock/streams.mock';
 import { AlertService } from 'src/app/services/alert.service';
 
+import { SearchService } from 'src/app/services/search.service';
+import { StreamService } from '../../services/stream.service'
 declare var $: any;
 
 @Component({
@@ -17,8 +19,9 @@ declare var $: any;
 })
 export class StreamComponent implements OnInit {
 
-  streams: Stream[];
+  streams: Stream[] = [];
   selectedStreams: Stream[];
+  filteredStreams:Stream[];
 
   message: string;
 
@@ -26,15 +29,29 @@ export class StreamComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dataService: DataService,
+    private streamService: StreamService,
+    private searchService: SearchService,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    this.streams = this.dataService.getStreams();
+    this.streamService.getStreams().subscribe((incomingStreams)=>{
+      incomingStreams.forEach(stream => {
+        if(!this.streams.includes(stream)){
+          this.streams.push(stream);
+        }
+      });
+    })
     this.getSelectedStreams();
+    this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {
       this.router.navigate(['/overview']);
     }
+    this.searchService.filter.subscribe((filter)=>{
+      this.filteredStreams = this.streams.filter(stream=>{
+        return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
+      })
+    })
   }
 
   addToSelectedStreams(stream: Stream): void {

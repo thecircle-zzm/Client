@@ -33,7 +33,7 @@ export class StreamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.streamService.getStreams().subscribe((incomingStreams)=>{
+    this.dataService.getStreams().subscribe((incomingStreams)=>{
       incomingStreams.forEach(stream => {
         if(!this.streams.includes(stream)){
           this.streams.push(stream);

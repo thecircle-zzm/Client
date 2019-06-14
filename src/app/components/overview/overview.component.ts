@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { DataService } from '../../services/data.service';
-import { StreamService } from '../../services/stream.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -28,7 +27,6 @@ export class OverviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private streamService: StreamService,
     private searchService: SearchService,
     private dataService: DataService,
     private alertService: AlertService
@@ -36,12 +34,11 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.streams = this.dataService.getStreams();
     this.dataService.clear();
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
     this.filteredStreams = this.streams;
-    this.streamService.getStreams().subscribe((incomingStreams)=>{
+    this.dataService.getStreams().subscribe((incomingStreams)=>{
       incomingStreams.forEach(stream => {
         if(!this.streams.includes(stream)){
           this.streams.push(stream);

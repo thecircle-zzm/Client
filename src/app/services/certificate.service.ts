@@ -22,14 +22,11 @@ export class CertificateService {
 
     createCertificate(){
         let promiseKey:PromiseLike<CryptoKeyPair> = null;
-        let privateKey = null;
-        let publicKey = null;
         
         if(this.crypto.subtle){
             promiseKey = crypto.subtle.generateKey({name: "RSASSA-PKCS1-v1_5", modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: {name: "SHA-256"}}, false, ["sign", "verify"]);
             promiseKey.then(function(key){
-                privateKey = key.privateKey;
-                publicKey = key.publicKey;
+                return key;
             },function(error){
                 this.Alerts.notifyUser("BadCrypto")
             })

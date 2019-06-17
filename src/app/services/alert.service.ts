@@ -17,6 +17,12 @@ export class AlertService {
         return "You can only select a maximum of four streams. Deselect a stream before selecting another.";
         break;
       }
+      case 'badCrypto': {
+        return "Certificatss cannot be verified, please contact the owners."
+      }
+      case 'noCrypto': {
+        return "Certificates cannot be verified, due to no support."
+      }
 
     }
   }

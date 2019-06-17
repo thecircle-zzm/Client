@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { AuthenticationService } from '../../services/auth.service';
 
 @Component({
@@ -10,6 +9,7 @@ import { AuthenticationService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
+  file: any;
   loading = false;
   returnUrl: string;
 
@@ -28,16 +28,17 @@ export class LoginComponent implements OnInit {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  fileChanged(e) {
+    this.file = e.target.files[0];
+  }
+
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
-    .subscribe(
-      data => {
-        this.router.navigate([this.returnUrl]);
-      },
-      error => {
-        //this.alertService.error(error);
-        this.loading = false;
-    });
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.authenticationService.login(this.model.username, fileReader.result.toString());
+      this.router.navigate(['/overview']);
+    }
+    fileReader.readAsText(this.file);
   }
 }

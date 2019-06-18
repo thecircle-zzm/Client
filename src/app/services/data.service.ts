@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Stream } from '../models/stream';
-import { STREAMS } from '../mock/streams.mock';
 import { Observable, of } from 'rxjs'
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-    private url = 'http://localhost:8080/api/stream';
+    private url = 'http://188.166.38.127:8080/api/stream';
     private selectedStreams: Stream[] = [];
 
     constructor(private http: HttpClient){}

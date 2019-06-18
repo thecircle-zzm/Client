@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-4" *ngFor="let stream of filteredStreams;">
         <div class="stream-box shadow-sm">
-          <img (click)="addToSelectedStreams(stream)" src="http://localhost:8080{{stream.stream.thumbnail}}" alt="Camerafootage">
+          <img (click)="addToSelectedStreams(stream)" src="http://188.166.38.127:8080{{stream.stream.thumbnail}}" alt="Camerafootage">
           <div class="stream-overlay">
             <div (click)="addToSelectedStreams(stream)" class="username">{{stream.streamer.username}}</div>
             <div class="viewstats">

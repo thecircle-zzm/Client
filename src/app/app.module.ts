@@ -21,6 +21,7 @@ import { AuthenticationService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { DataService } from './services/data.service';
 import { SearchService } from './services/search.service';
+import { CertificateService } from './services/certificate.service';
 
 const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
 
@@ -44,7 +45,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     SocketIoModule.forRoot(config)
   ],
   providers: [AuthGuard, AuthenticationService, UserService, DataService,
-    SearchService],
+    SearchService, CertificateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

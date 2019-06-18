@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { NgxIndexedDB } from 'ngx-indexed-db';
 import 'rxjs/add/operator/map';
+import { CertificateService } from './certificate.service';
 
 // import { UserService } from './user.service';
 
@@ -15,10 +16,19 @@ export class AuthenticationService {
   
   constructor(
     private http: HttpClient,
+    private certificateService: CertificateService
     // private userService: UserService
     ) { }
 
   login(username: string, key: string) {
+    console.log(key)
+    this.certificateService.importKey(key).then((key)=>{
+      this.certificateService.encrypt("{username:"+username+"}",key).then((signature)=>{
+        this.http.post("localhost:51127/api","{username:"+username+"}",{headers:{signature:String.fromCharCode.apply(signature)}})
+      });
+    },(reason)=>{
+      console.log("No import" + reason)
+    })
     sessionStorage.setItem('user', JSON.stringify({username: username, key: key}))
     console.log(sessionStorage.getItem('user'));
   }

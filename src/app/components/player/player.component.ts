@@ -10,16 +10,18 @@ declare var flvjs: any;
 export class PlayerComponent implements OnInit {
 
   @Input('streamlink') streamlink: string;
+  @Input('sessionid') sessionid: string;
+
   stream: string;
 
   constructor() {
    }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.stream = 'http://188.166.38.127:8000' + this.streamlink + '.flv';
 
     if (flvjs.isSupported()) {
-      var videoElement = document.getElementById('videoElement');
+      var videoElement = document.getElementById(this.sessionid);
       var flvPlayer = flvjs.createPlayer({
         type: 'flv',
         url: this.stream

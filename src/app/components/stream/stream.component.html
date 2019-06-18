@@ -11,7 +11,7 @@
             <div class="viewcount">{{stream.viewCount}}</div>
           </div>
           <i (click)="removeFromSelectedStreams(stream)" class="material-icons close-button">close</i>
-          <app-player [streamlink]="stream.stream.path"></app-player>
+          <app-player [streamlink]="stream.stream.path" [sessionid]="stream.sessionid"></app-player>
           <app-chat [username]="stream.name" [chatId]="stream.sessionid"></app-chat>
         </div>
       </div>

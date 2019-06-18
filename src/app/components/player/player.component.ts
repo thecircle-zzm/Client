@@ -17,6 +17,8 @@ export class PlayerComponent implements OnInit {
   constructor() {
    }
 
+   ngOnInit(){}
+
   ngAfterViewInit() {
     this.stream = 'http://188.166.38.127:8000' + this.streamlink + '.flv';
 

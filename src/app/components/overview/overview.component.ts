@@ -42,6 +42,7 @@ export class OverviewComponent implements OnInit {
       incomingStreams.forEach(stream => {
         if(!this.streams.includes(stream)){
           this.streams.push(stream);
+          console.log(stream);
         }
       });
     })

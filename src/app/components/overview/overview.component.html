@@ -5,9 +5,9 @@
     <div class="row">
       <div class="col-4" *ngFor="let stream of filteredStreams;">
         <div class="stream-box shadow-sm">
-          <img (click)="addToSelectedStreams(stream)" src="{{stream.thumb}}" alt="Camerafootage">
+          <img (click)="addToSelectedStreams(stream)" src="http://localhost:8080{{stream.stream.thumbnail}}" alt="Camerafootage">
           <div class="stream-overlay">
-            <div (click)="addToSelectedStreams(stream)" class="username">{{stream.name}}</div>
+            <div (click)="addToSelectedStreams(stream)" class="username">{{stream.streamer.username}}</div>
             <div class="viewstats">
               <div class="viewcount"><i class="material-icons">people</i>{{stream.viewCount}}</div>
             </div>
@@ -24,9 +24,9 @@
       <div class="col-3" *ngFor="let stream of selectedStreams;">
         <div class="stream-box shadow-sm">
           <i (click)="removeFromSelectedStreams(stream)" class="material-icons close-button">close</i>
-          <img src="{{stream.thumb}}" alt="Camerafootage">
+          <img src="http://localhost:8080{{stream.stream.thumbnail}}" alt="Camerafootage">
           <div class="stream-overlay">
-            <div class="username">{{stream.name}}</div>
+            <div class="username">{{stream.streamer.username}}</div>
             <div class="viewstats">
               <div class="viewcount"><i class="material-icons">people</i>{{stream.viewCount}}</div>
             </div>

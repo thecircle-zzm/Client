@@ -4,15 +4,15 @@
   <div class="overview shadow-sm">
     <div class="row">
       <div class="col-6" *ngFor="let stream of selectedStreams;">
-        <h2>{{stream.name}}</h2>
+        <h2>{{stream.streamer.username}}</h2>
         <div class="streamwrapper shadow-sm">
           <div class="viewstats">
             <i class="material-icons">people</i>
             <div class="viewcount">{{stream.viewCount}}</div>
           </div>
           <i (click)="removeFromSelectedStreams(stream)" class="material-icons close-button">close</i>
-          <app-player></app-player>
-          <app-chat [username]="stream.name" [chatId]="stream.id"></app-chat>
+          <app-player [streamlink]="stream.stream.path"></app-player>
+          <app-chat [username]="stream.name" [chatId]="stream.sessionid"></app-chat>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-4" *ngFor="let stream of filteredStreams;">
         <div class="stream-box shadow-sm">
-          <img (click)="addToSelectedStreams(stream)" src="{{stream.stream.thumbnail}}" alt="Camerafootage">
+          <img (click)="addToSelectedStreams(stream)" src="http://localhost:8080{{stream.stream.thumbnail}}" alt="Camerafootage">
           <div class="stream-overlay">
             <div (click)="addToSelectedStreams(stream)" class="username">{{stream.streamer.username}}</div>
             <div class="viewstats">

@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Stream } from '../models/stream';
 import { STREAMS } from '../mock/streams.mock';
 import { Observable, of } from 'rxjs'
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-    streams: Stream[] = STREAMS;
-    selectedStreams: Stream[] = [];
+    private url = 'http://localhost:8080/api/stream';
+    private selectedStreams: Stream[] = [];
+
+    constructor(private http: HttpClient){}
 
     addToSelectedStreams(stream: Stream): string {
         if (this.selectedStreams.length < 4) {
@@ -30,8 +33,8 @@ export class DataService {
         this.selectedStreams.splice(this.selectedStreams.indexOf(stream), 1);
     }
 
-    getStreams(): Observable<Stream[]> {
-        return of(this.streams);
+    getStreams(): Observable<any[]> {
+        return this.http.get<any[]>(this.url)
     }
 
     getSelectedStreams(): Stream[] {

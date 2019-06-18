@@ -31,7 +31,8 @@
             ],
             "scripts": [ 
               "./node_modules/jquery/dist/jquery.min.js",
-              "./src/assets/js/flv.min.js"
+              "./src/assets/js/flv.min.js",
+              "./node_modules/jsrsasign/lib/jsrsasign-all-min.js"
             ]
           },
           "configurations": {

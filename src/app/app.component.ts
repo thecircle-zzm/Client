@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CertificateService } from './services/certificate.service';
 
 
 @Component({
@@ -10,23 +9,10 @@ import { CertificateService } from './services/certificate.service';
 export class AppComponent implements OnInit {
   title = 'ClientCircle';
 
-  constructor(private service:CertificateService){
+  constructor(){
 
   }
 
   ngOnInit() {
-    let test = "Hello"
-    let test2 = "Hello you"
-    this.service.createCertificate().then((key)=>{
-      this.service.encrypt(test, key.privateKey).then((certificate)=>{
-        this.service.exportKey(key.publicKey).then((x)=>{
-          console.log(x)
-        })
-        sessionStorage.setItem("Certificate",String.fromCharCode.apply(certificate))
-        this.service.verifySignature(test,key.publicKey,certificate).then((verified)=>{
-          console.log(verified);
-        })
-      })
-    })
   }
 }

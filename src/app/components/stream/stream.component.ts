@@ -3,9 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataService } from 'src/app/services/data.service';
 
-import { Stream } from 'src/app/models/stream';
-
-import { STREAMS } from '../../mock/streams.mock';
 import { AlertService } from 'src/app/services/alert.service';
 
 import { SearchService } from 'src/app/services/search.service';
@@ -18,9 +15,9 @@ declare var $: any;
 })
 export class StreamComponent implements OnInit {
 
-  streams: Stream[] = [];
-  selectedStreams: Stream[];
-  filteredStreams:Stream[];
+  streams: any[] = [];
+  selectedStreams: any[];
+  filteredStreams:any[];
 
   message: string;
 
@@ -54,7 +51,7 @@ export class StreamComponent implements OnInit {
     })
   }
 
-  addToSelectedStreams(stream: Stream): void {
+  addToSelectedStreams(stream: any): void {
     this.message = this.dataService.addToSelectedStreams(stream);
     switch (this.message) {
       case 'success': {
@@ -77,7 +74,7 @@ export class StreamComponent implements OnInit {
     this.selectedStreams = this.dataService.getSelectedStreams();
   }
 
-  removeFromSelectedStreams(stream: Stream): boolean {
+  removeFromSelectedStreams(stream: any): boolean {
     this.dataService.removeFromSelectedStreams(stream);
     this.changeResolution(this.selectedStreams.length);
     return true;

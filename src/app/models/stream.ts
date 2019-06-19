@@ -1,7 +1,6 @@
 export class Stream {
-  id: number;
+  id: string;
   name: string;
   viewCount: number;
-  followCount: number;
   thumb: string;
 }

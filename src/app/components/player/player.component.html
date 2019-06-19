@@ -1,13 +1,1 @@
-<video controls autoplay id="videoElement"></video>
-<script>
-  if (flvjs.isSupported()) {
-    var videoElement = document.getElementById('videoElement');
-    var flvPlayer = flvjs.createPlayer({
-      type: 'flv',
-      url: 'http:/188.166.38.127:8000/live/test.flv'
-    });
-    flvPlayer.attachMediaElement(videoElement);
-    flvPlayer.load();
-    flvPlayer.play();
-  }
-</script>
+<video controls autoplay id="{{sessionid}}"></video>

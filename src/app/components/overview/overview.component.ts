@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Stream } from '../../models/stream';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -18,9 +16,9 @@ declare var $: any;
 })
 export class OverviewComponent implements OnInit {
 
-  streams:Stream[] = [];
-  filteredStreams:Stream[];
-  selectedStreams:Stream[];
+  streams:any[] = [];
+  filteredStreams:any[];
+  selectedStreams:any[];
 
   message: string;
 
@@ -38,13 +36,7 @@ export class OverviewComponent implements OnInit {
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
     this.filteredStreams = this.streams;
-    this.dataService.getStreams().subscribe((incomingStreams)=>{
-      incomingStreams.forEach(stream => {
-        if(!this.streams.includes(stream)){
-          this.streams.push(stream);
-        }
-      });
-    })
+    this.fillOverview();
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
@@ -52,7 +44,7 @@ export class OverviewComponent implements OnInit {
     })
   }
 
-  addToSelectedStreams(stream: Stream): void {
+  addToSelectedStreams(stream: any): void {
     this.message = this.dataService.addToSelectedStreams(stream);
       switch(this.message){
         case 'success': {
@@ -75,13 +67,24 @@ export class OverviewComponent implements OnInit {
     $('.selected-streams-overlay').fadeIn(100);
   }
 
-  removeFromSelectedStreams(stream:Stream):boolean {
+  removeFromSelectedStreams(stream:any):boolean {
     this.dataService.removeFromSelectedStreams(stream);
     this.showSelectedStreams();
     if (this.selectedStreams.length == 0){
       $('.selected-streams-overlay').hide();
     }
     return true;
+  }
+
+  fillOverview() {
+    this.dataService.getStreams().subscribe((incomingStreams) => {
+      incomingStreams.forEach(stream => {
+        if (!this.streams.includes(stream)) {
+          this.streams.push(stream);
+          console.log(stream);
+        }
+      });
+    })
   }
 
   changeMessage(message:string) {

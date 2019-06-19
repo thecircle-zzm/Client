@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
  * It sends messages using 'sendMessage' as an event, for the server to handle by reading the id of *
  * the messsage. It fires off a single getAll request at load to get all older messages in the chat */
 export class MessageService {
+
     gottenMessages: Observable<Message[]>;
     private chatId: string;
     constructor(private socket: Socket) {

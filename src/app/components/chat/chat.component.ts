@@ -14,7 +14,8 @@ declare var $: any;
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   
     @Input('chatId') chatId: string;
-    @Input('username') username: string;
+    
+    username: string = JSON.parse(sessionStorage.getItem('user')).username;
     public text = '';
     public errorMessage = "Please input text.";
     messages: Message[] = [];

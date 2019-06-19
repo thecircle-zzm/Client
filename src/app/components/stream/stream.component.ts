@@ -6,6 +6,8 @@ import { DataService } from 'src/app/services/data.service';
 import { AlertService } from 'src/app/services/alert.service';
 
 import { SearchService } from 'src/app/services/search.service';
+
+import { ChatService } from '../../services/chat.service';
 declare var $: any;
 
 @Component({
@@ -26,7 +28,8 @@ export class StreamComponent implements OnInit {
     private router: Router,
     public dataService: DataService,
     private searchService: SearchService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
@@ -77,6 +80,7 @@ export class StreamComponent implements OnInit {
   removeFromSelectedStreams(stream: any): boolean {
     this.dataService.removeFromSelectedStreams(stream);
     this.changeResolution(this.selectedStreams.length);
+    this.chatService.getChat(stream.sessionid).disconnect();
     return true;
   }
 

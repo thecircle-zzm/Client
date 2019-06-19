@@ -78,12 +78,25 @@ export class OverviewComponent implements OnInit {
 
   fillOverview() {
     this.dataService.getStreams().subscribe((incomingStreams) => {
+      let dict:Map<Object,boolean> = new Map<Object,boolean>()
+      this.streams.forEach((stream)=>{
+        dict.set(stream,false);
+      })
       incomingStreams.forEach(stream => {
+        
+        if(this.streams.includes(stream)){
+          dict.set(stream,true);
+        }
         if (!this.streams.includes(stream)) {
           this.streams.push(stream);
+          dict.set(stream,true);
           console.log(stream);
         }
+        
       });
+      this.streams.filter((val)=>{
+        return dict.get(val)
+      })
     })
   }
 

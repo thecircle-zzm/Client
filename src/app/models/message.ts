@@ -1,14 +1,13 @@
-export class Message implements JSON{
+export class Message {
     [Symbol.toStringTag]: string;
     chat:string;
     message: string;
     username: string;
-    parse(s:string){
-        let j = JSON.parse(s);
-        this.message = j.text;
+    parse(j){
+        this.message = j.message;
         this.username = j.username;
     }
     public stringify(){
-        return '{ message: "' + this.message + '", username: "' + this.username +'" }'
+        return JSON.stringify({"message":this.message,"username":this.username});
     }
 }

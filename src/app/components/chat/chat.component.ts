@@ -51,7 +51,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       m.message = this.text;
       this.text = '';
       this.chatService.getChat(this.chatId).send(m);
-      this.messages.push(m)
     }
   }
 

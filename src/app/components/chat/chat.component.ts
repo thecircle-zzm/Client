@@ -62,7 +62,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   changeMessage(message:string) {
     this.errorMessage = message;
-    $('.modal').show();
+    $('.modal').fadeIn(300);
   }
 
   notifyUser(messageType:string):void {

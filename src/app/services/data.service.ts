@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Stream } from '../models/stream';
-import { STREAMS } from '../mock/streams.mock';
 import { Observable, of } from 'rxjs'
+import 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataService {
-    streams: Stream[] = STREAMS;
-    selectedStreams: Stream[] = [];
+    private url = 'http://188.166.38.127:8080/api/stream';
+    private selectedStreams: any[] = [];
 
-    addToSelectedStreams(stream: Stream): string {
+    constructor(private http: HttpClient){}
+
+    addToSelectedStreams(stream: any): string {
         if (this.selectedStreams.length < 4) {
-            if (!this.selectedStreams.find(x => x.id == stream.id)) {
+            if (!this.selectedStreams.find(x => x.sessionid == stream.sessionid)) {
                 this.selectedStreams.push(stream);
                 return "success";
             }
@@ -26,15 +28,15 @@ export class DataService {
         this.selectedStreams = [];
     }
 
-    removeFromSelectedStreams(stream: Stream): void{
+    removeFromSelectedStreams(stream: any): void{
         this.selectedStreams.splice(this.selectedStreams.indexOf(stream), 1);
     }
 
-    getStreams(): Observable<Stream[]> {
-        return of(this.streams);
+    getStreams(): Observable<any[]> {
+        return this.http.get<any[]>(this.url);
     }
 
-    getSelectedStreams(): Stream[] {
+    getSelectedStreams(): any[] {
         return this.selectedStreams;
     }
 }

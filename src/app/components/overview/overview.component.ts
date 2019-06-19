@@ -35,15 +35,7 @@ export class OverviewComponent implements OnInit {
     this.dataService.clear();
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
-    this.filteredStreams = this.streams;
-    this.dataService.getStreams().subscribe((incomingStreams)=>{
-      incomingStreams.forEach(stream => {
-        if(!this.streams.includes(stream)){
-          this.streams.push(stream);
-          console.log(stream);
-        }
-      });
-    })
+    this.fillOverview();
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
@@ -81,6 +73,17 @@ export class OverviewComponent implements OnInit {
       $('.selected-streams-overlay').hide();
     }
     return true;
+  }
+
+  fillOverview() {
+    this.dataService.getStreams().subscribe((incomingStreams) => {
+      incomingStreams.forEach(stream => {
+        if (!this.streams.includes(stream)) {
+          this.streams.push(stream);
+          console.log(stream);
+        }
+      });
+    })
   }
 
   changeMessage(message:string) {

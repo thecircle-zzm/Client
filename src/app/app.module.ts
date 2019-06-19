@@ -22,7 +22,7 @@ import { UserService } from './services/user.service';
 import { DataService } from './services/data.service';
 import { SearchService } from './services/search.service';
 
-const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
+const config: SocketIoConfig = { url: 'http://145.49.6.171:5000', options: {} };
 
 @NgModule({
   declarations: [

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs'
+import 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
@@ -32,7 +33,9 @@ export class DataService {
     }
 
     getStreams(): Observable<any[]> {
-        return this.http.get<any[]>(this.url)
+        return Observable.interval(30000).flatMap(() => {
+            return this.http.get<any[]>(this.url);
+        });
     }
 
     getSelectedStreams(): any[] {

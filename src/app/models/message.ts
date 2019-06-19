@@ -1,6 +1,4 @@
 export class Message {
-    [Symbol.toStringTag]: string;
-    chat:string;
     message: string;
     username: string;
     parse(j){

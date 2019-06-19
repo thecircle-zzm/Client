@@ -44,6 +44,8 @@ export class StreamComponent implements OnInit {
     this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {
       this.router.navigate(['/overview']);
+    } else if (this.selectedStreams.length == 1){
+      this.changeResolution(this.selectedStreams.length);
     }
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
@@ -56,6 +58,7 @@ export class StreamComponent implements OnInit {
     this.message = this.dataService.addToSelectedStreams(stream);
     switch (this.message) {
       case 'success': {
+        this.changeResolution(this.selectedStreams.length);
         this.selectedStreams = this.dataService.getSelectedStreams();
         break;
       }
@@ -76,6 +79,7 @@ export class StreamComponent implements OnInit {
 
   removeFromSelectedStreams(stream: Stream): boolean {
     this.dataService.removeFromSelectedStreams(stream);
+    this.changeResolution(this.selectedStreams.length);
     return true;
   }
 
@@ -88,4 +92,13 @@ export class StreamComponent implements OnInit {
     $('.modal').hide();
   }
 
+  changeResolution(selectedStreams) {
+    $(function () {
+      if ($('.col-6').hasClass("fullStream")) {
+        $('.col-6').removeClass("fullStream");
+      } else if (selectedStreams == 1) {
+        $('.col-6').addClass("fullStream");
+      }
+    })
+  }
 }

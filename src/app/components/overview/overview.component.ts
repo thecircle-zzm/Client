@@ -35,6 +35,7 @@ export class OverviewComponent implements OnInit {
     this.dataService.clear();
     $('.selected-streams-overlay').hide();
     $('.modal').hide();
+    this.filteredStreams = this.streams;
     this.fillOverview();
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{

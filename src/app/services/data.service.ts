@@ -33,9 +33,7 @@ export class DataService {
     }
 
     getStreams(): Observable<any[]> {
-        return Observable.interval(30000).flatMap(() => {
-            return this.http.get<any[]>(this.url);
-        });
+        return this.http.get<any[]>(this.url);
     }
 
     getSelectedStreams(): any[] {

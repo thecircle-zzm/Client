@@ -14,9 +14,10 @@ export class MessageService {
     private chatId: string;
     constructor(private socket: Socket) {
     }
-    public getObservable(chatId:string, username: string){
-        this.chatId = chatId;
-        this.socket.emit('join',"{ room:" + chatId + ", username:" + username + "}")
+    public getObservable(roomId:string, username: string){
+        let login = "{ room:" + roomId + ", username:" + username + "}"
+        console.log(login)
+        this.socket.emit('join', login)
         return new Observable((observer) => {
             this.socket.on('sendMessage', (data) => {
                 let message = new Message();

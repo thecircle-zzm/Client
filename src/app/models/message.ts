@@ -9,6 +9,6 @@ export class Message implements JSON{
         this.username = j.username;
     }
     public stringify(){
-        return '{ "message": "' + this.message + '", "username": "' + this.username +'" }'
+        return '{ message: "' + this.message + '", username: "' + this.username +'" }'
     }
 }

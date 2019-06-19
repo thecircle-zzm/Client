@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, Eleme
 import { Subscription } from 'rxjs'
 import { MessageService } from '../../services/message.service'
 import { Message } from '../../models/message'
-import { Socket } from 'ngx-socket-io';
 
 
 declare var $: any;
@@ -19,22 +18,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     username: string = JSON.parse(sessionStorage.getItem('user')).username;
     public text = '';
     public errorMessage = "Please input text.";
-    private socket;
     messages: Message[] = [];
     private mSub: Subscription;
-    private mService: MessageService = new MessageService(new Socket({ url: 'http://localhost:5000', options: {} }))
-
-    constructor() { }
+    constructor(private mService:MessageService) { }
     ngOnInit(){
       $('.modal').hide();
-      this.mService.connect(this.chatId,this.username);
-      this.socket = this.mService.getSocket();
-      this.socket.on("sendMessage",(data)=>{
-      })
-      this.socket.on("roomData",(data)=>{
-        console.log(data);
-      })
-      this. mSub = this.mService.getObservable().subscribe((message: Message) => {
+      this. mSub = this.mService.getObservable(this.chatId,this.username).subscribe((message: Message) => {
         if(!this.messages.includes(message)){
           this.messages.push(message);
         }

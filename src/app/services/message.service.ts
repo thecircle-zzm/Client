@@ -14,7 +14,10 @@ export class MessageService {
     private chatId: string;
     constructor(private socket: Socket) {
     }
-    public getObservable(){
+    public getObservable(roomId:string, username: string){
+        let login = JSON.stringify({"room":roomId,"username":username})
+        console.log(login)
+        this.socket.emit('join', login)
         return new Observable((observer) => {
             this.socket.on('sendMessage', (data) => {
                 console.log(data)
@@ -23,26 +26,15 @@ export class MessageService {
                 observer.next(message);
             });
         });
-        
-    }
-    public getSocket(){
-        return this.socket;
     }
 
-    public connect(roomId:string,username:string){
-        this.socket.connect()
-        let login = JSON.stringify({"room":roomId,"username":username})
-        console.log(login)
-        this.socket.emit('join', login)
-    }
     public getAll(chatId:string){
         this.socket.emit('getAll',chatId)
     }
 
     public send(m:Message) {
-        
+        console.log(m.stringify())
         this.socket.emit('sendMessage',m.stringify(),(e)=>{
-            console.log(m.stringify())
             if(e){
                 return false;
             } else{

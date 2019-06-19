@@ -23,7 +23,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     constructor(private mService:MessageService) { }
     ngOnInit(){
       $('.modal').hide();
-      this. mSub = this.mService.getObservable(this.chatId).subscribe((message: Message) => {
+      this. mSub = this.mService.getObservable(this.chatId,this.username).subscribe((message: Message) => {
         if(!this.messages.includes(message)){
           this.messages.push(message);
         }
@@ -32,6 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     ngOnDestroy(){
       this.mSub.unsubscribe();
+      this.mService.disconnect();
     }
     onChanges(){
       alert("changed")
@@ -43,10 +44,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.notifyUser('noInput');
     } else{
       let m = new Message();
-        
       m.username = this.username;
-      m.text = this.text;
-      m.chat = this.chatId;
+      m.message = this.text;
       this.text = '';
       this.mService.send(m);
     }

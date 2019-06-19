@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Stream } from '../models/stream';
-import { STREAMS } from '../mock/streams.mock';
 import { Observable, of } from 'rxjs'
 
 @Injectable()
 export class DataService {
-    streams: Stream[] = STREAMS;
+    streams: Stream[] = [];
     selectedStreams: Stream[] = [];
 
     addToSelectedStreams(stream: Stream): string {

@@ -8,7 +8,7 @@ import { Socket, SocketIoConfig } from 'ngx-socket-io';
 export class ChatService {
 
   chatList:Map<string, MessageService> = new Map<string, MessageService>();
-  config: SocketIoConfig = { url: 'http://145.49.6.171:5000', options: {} };
+  config: SocketIoConfig = { url: 'http://188.166.38.127:5000', options: {} };
 
   constructor() { }
 

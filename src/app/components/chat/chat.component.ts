@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, ElementRef } from "@angular/core";
+import { Component, EventEmitter, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, ElementRef, Output } from "@angular/core";
 import { Subscription } from 'rxjs'
 import { MessageService } from '../../services/message.service'
 import { Message } from '../../models/message'
 import { Socket, SocketIoConfig } from 'ngx-socket-io';
 import { ChatService } from '../../services/chat.service';
-
 
 declare var $: any;
 @Component({
@@ -14,12 +13,11 @@ declare var $: any;
 })
 
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
-  
+    @Output('errorMessage') errorMessage = new EventEmitter<string>();
     @Input('chatId') chatId: string;
     
     username: string = JSON.parse(sessionStorage.getItem('user')).username;
     public text = '';
-    public errorMessage = "Please input text.";
     messages: Message[] = [];
     private mSub: Subscription;
     constructor(private chatService: ChatService) { }
@@ -64,8 +62,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   changeMessage(message:string) {
-    this.errorMessage = message;
-    $('.modal').show();
+    this.errorMessage.emit("Please input text.")
+    $('.modal').fadeIn(300);
   }
 
   notifyUser(messageType:string):void {

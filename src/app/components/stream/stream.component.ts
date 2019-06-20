@@ -33,13 +33,50 @@ export class StreamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.getStreams().subscribe((incomingStreams)=>{
+    setInterval(()=>{this.dataService.getStreams().subscribe((incomingStreams)=>{ 
+      let dict:Map<Object,boolean> = new Map<Object,boolean>()
+      this.streams.forEach((stream)=>{
+        dict.set(stream,false);
+      })
       incomingStreams.forEach(stream => {
-        if(!this.streams.includes(stream)){
-          this.streams.push(stream);
+        
+        if(this.streams.includes(stream)){
+          dict.set(stream,true);
         }
+        if(!(this.streams.filter((x)=>{return x.id==stream.id}).length>0))
+        
+          this.streams.push(stream);
+          this.filteredStreams = this.streams;
+          dict.set(stream,true);
+          console.log(stream);
+        
       });
-    })
+      this.streams.filter((val)=>{
+        return dict.get(val)
+      })
+    })},10000)
+    this.dataService.getStreams().subscribe((incomingStreams)=>{
+      let dict:Map<Object,boolean> = new Map<Object,boolean>()
+      this.streams.forEach((stream)=>{
+        dict.set(stream,false);
+      })
+      incomingStreams.forEach(stream => {
+        
+        if(this.streams.includes(stream)){
+          dict.set(stream,true);
+        }
+        if(!(this.streams.filter((x)=>{return x.id==stream.id}).length>0))
+        
+          this.streams.push(stream);
+          this.filteredStreams = this.streams;
+          dict.set(stream,true);
+          console.log(stream);
+        
+      });
+      this.streams.filter((val)=>{
+        return dict.get(val)
+      })
+    });
     this.getSelectedStreams();
     this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {

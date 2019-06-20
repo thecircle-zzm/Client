@@ -37,6 +37,7 @@ export class OverviewComponent implements OnInit {
     $('.modal').hide();
     this.filteredStreams = this.streams;
     this.fillOverview();
+    setInterval(()=>{this.fillOverview()},10000)
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
         return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
@@ -87,11 +88,12 @@ export class OverviewComponent implements OnInit {
         if(this.streams.includes(stream)){
           dict.set(stream,true);
         }
-        if (!this.streams.includes(stream)) {
+        if(!(this.streams.filter((x)=>{return x.id==stream.id}).length>0))
+        
           this.streams.push(stream);
+          this.filteredStreams = this.streams;
           dict.set(stream,true);
           console.log(stream);
-        }
         
       });
       this.streams.filter((val)=>{

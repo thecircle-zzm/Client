@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild, Eleme
 import { Subscription } from 'rxjs'
 import { MessageService } from '../../services/message.service'
 import { Message } from '../../models/message'
+import { Socket, SocketIoConfig } from 'ngx-socket-io';
+import { ChatService } from '../../services/chat.service';
 
 
 declare var $: any;
@@ -20,10 +22,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     public errorMessage = "Please input text.";
     messages: Message[] = [];
     private mSub: Subscription;
-    constructor(private mService:MessageService) { }
+    constructor(private chatService: ChatService) { }
     ngOnInit(){
       $('.modal').hide();
-      this. mSub = this.mService.getObservable(this.chatId,this.username).subscribe((message: Message) => {
+      this.chatService.newChat(this.chatId)
+      this.mSub = this.chatService.getChat(this.chatId).getObservable(this.chatId,this.username).subscribe((message: Message) => {
         if(!this.messages.includes(message)){
           this.messages.push(message);
         }
@@ -32,7 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     ngOnDestroy(){
       this.mSub.unsubscribe();
-      this.mService.disconnect();
+      this.chatService.getChat(this.chatId).disconnect();
     }
     onChanges(){
       alert("changed")
@@ -47,7 +50,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       m.username = this.username;
       m.message = this.text;
       this.text = '';
-      this.mService.send(m);
+      this.chatService.getChat(this.chatId).send(m);
     }
   }
 

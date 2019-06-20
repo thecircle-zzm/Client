@@ -12,15 +12,14 @@ import { Observable } from 'rxjs';
 export class MessageService {
     gottenMessages: Observable<Message[]>;
     private chatId: string;
-    constructor(private socket: Socket) {
-    }
+    constructor(private socket: Socket) {}
     public getObservable(roomId:string, username: string){
         let login = JSON.stringify({"room":roomId,"username":username})
         console.log(login)
         this.socket.emit('join', login)
         return new Observable((observer) => {
             this.socket.on('sendMessage', (data) => {
-                console.log(data)
+                console.log("message ontvangen"+data.message)
                 let message = new Message();
                 message.parse(data);
                 observer.next(message);

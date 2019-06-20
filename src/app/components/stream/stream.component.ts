@@ -43,7 +43,7 @@ export class StreamComponent implements OnInit {
         if(this.streams.includes(stream)){
           dict.set(stream,true);
         }
-        if(!(this.streams.filter((x)=>{return x.id==stream.id}).length>0))
+        if(!(this.streams.filter((x)=>{return x.sessionid==stream.sessionid}).length>0))
         
           this.streams.push(stream);
           this.filteredStreams = this.streams;
@@ -65,7 +65,7 @@ export class StreamComponent implements OnInit {
         if(this.streams.includes(stream)){
           dict.set(stream,true);
         }
-        if(!(this.streams.filter((x)=>{return x.id==stream.id}).length>0))
+        if(!(this.streams.filter((x)=>{return x.sessionid==stream.sessionid}).length>0))
         
           this.streams.push(stream);
           this.filteredStreams = this.streams;

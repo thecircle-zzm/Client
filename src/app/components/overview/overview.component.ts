@@ -40,9 +40,36 @@ export class OverviewComponent implements OnInit {
     setInterval(()=>{this.fillOverview()},10000)
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
-        return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
+        console.log(stream.streamer.username)
+        return stream.streamer.username.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
       })
     })
+    setInterval(()=>{
+      this.selectedStreams.forEach((stream)=>{
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          stream.viewCount=viewers.viewercount;
+          this.selectedStreams[this.selectedStreams.indexOf(stream)]=stream;
+          streamnum++;
+        })
+      })
+      this.selectedStreams.forEach((stream)=>{
+        console.log(stream.viewCount)
+      })
+    },10000)
+    let streamnum = 0;
+    this.streams.forEach(stream => {
+      this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+        this.streams[streamnum].viewCount=viewers.viewercount
+      })
+    });
+    setInterval(()=>{
+      streamnum=0;
+      this.streams.forEach(stream => {
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          this.streams[streamnum].viewCount=viewers.viewercount
+        })
+      });
+    },10000)
   }
 
   addToSelectedStreams(stream: any): void {

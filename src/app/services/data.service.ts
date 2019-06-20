@@ -36,6 +36,10 @@ export class DataService {
         return this.http.get<any[]>(this.url);
     }
 
+    getViewers(sessionId):Observable<any>{
+        return this.http.get<any[]>(this.url+"/"+sessionId)
+    }
+
     getSelectedStreams(): any[] {
         return this.selectedStreams;
     }

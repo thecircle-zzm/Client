@@ -8,11 +8,11 @@
         <div class="streamwrapper shadow-sm">
           <div class="viewstats">
             <i class="material-icons">people</i>
-            <div class="viewcount">{{stream.viewCount}}</div>
+            <p class="viewcount">{{stream.viewCount}}</p>
           </div>
           <i (click)="removeFromSelectedStreams(stream)" class="material-icons close-button">close</i>
           <app-player [streamlink]="stream.stream.path" [sessionid]="stream.sessionid"></app-player>
-          <app-chat (errorMessage)="changeMessage($event)" [chatId]="stream.sessionid"></app-chat>
+          <app-chat (errorMessage)="changeMessage($event)" [chatId]="stream.stream.key"></app-chat>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
           <div class="stream-overlay">
             <div (click)="addToSelectedStreams(stream)" class="username">{{stream.streamer.username}}</div>
             <div class="viewstats">
-              <div class="viewcount"><i class="material-icons">people</i>{{stream.viewCount}}</div>
+              <div class="viewcount"><i class="material-icons">people</i><p class="viewcount">{{stream.viewCount}}</p></div>
             </div>
           </div>
         </div>

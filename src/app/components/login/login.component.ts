@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../services/auth.service';
+import { AlertService } from 'src/app/services/alert.service';
+
+declare var $: any;
 
 declare var $ : any 
 @Component({
@@ -20,7 +23,7 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
-      //private alertService: AlertService
+      private alertService: AlertService
       ) { }
 
   ngOnInit() {
@@ -41,21 +44,31 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() {
-    this.loading = true;
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      if(this.fileTypeValid && (fileReader.result.toString().includes("-----BEGIN PRIVATE KEY-----")&& fileReader.result.toString().includes("-----END PRIVATE KEY-----"))){
-        this.authenticationService.login(this.model.username, fileReader.result.toString());
-        this.router.navigate(['/overview']);
-      } else {
-        this.message = "File is not valid, please enter the right key file for use with our application";
-        $(".modal").fadeIn(300)
+
+  login(text) {
+    console.log(text);
+    if (text != "" && text != null) {
+      this.loading = true;
+      let fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        if(this.fileTypeValid && (fileReader.result.toString().includes("-----BEGIN PRIVATE KEY-----")&& fileReader.result.toString().includes("-----END PRIVATE KEY-----"))){
+          this.authenticationService.login(this.model.username, fileReader.result.toString());
+          this.router.navigate(['/overview']);
+        } else {
+          this.changeMessage("File is not valid, please enter the right key file for use with our application");
+        }
       }
+      fileReader.readAsText(this.file);
+    } else {
+      this.changeMessage(this.alertService.notifyUser('noUsername'));
     }
-    fileReader.readAsText(this.file);
   }
-  
+
+  changeMessage(message:string) {
+    this.message = message;
+    $('.modal').fadeIn(300);
+  }
+
   closeModal() {
     $('.modal').hide();
   }

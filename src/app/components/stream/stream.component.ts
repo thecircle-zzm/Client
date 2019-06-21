@@ -33,13 +33,29 @@ export class StreamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    setInterval(()=>{this.dataService.getStreams()},10000)
     this.dataService.getStreams().subscribe((incomingStreams)=>{
+      let dict:Map<Object,boolean> = new Map<Object,boolean>()
+      this.streams.forEach((stream)=>{
+        dict.set(stream,false);
+      })
       incomingStreams.forEach(stream => {
-        if(!this.streams.includes(stream)){
-          this.streams.push(stream);
+        
+        if(this.streams.includes(stream)){
+          dict.set(stream,true);
         }
+        if(!(this.streams.filter((x)=>{return x.sessionid==stream.sessionid}).length>0))
+        
+          this.streams.push(stream);
+          this.filteredStreams = this.streams;
+          dict.set(stream,true);
+          console.log(stream);
+        
       });
-    })
+      this.streams.filter((val)=>{
+        return dict.get(val)
+      })
+    });
     this.getSelectedStreams();
     this.filteredStreams = this.streams;
     if (this.selectedStreams == undefined || this.selectedStreams.length == 0) {
@@ -49,9 +65,36 @@ export class StreamComponent implements OnInit {
     }
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
-        return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
+        return stream.streamer.username.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
       })
     })
+    setInterval(()=>{
+      let streamnum = 0;
+      this.selectedStreams.forEach((stream)=>{
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          stream.viewCount=viewers.viewercount;
+          this.selectedStreams[this.selectedStreams.indexOf(stream)]=stream;
+          streamnum++;
+        })
+      })
+      this.selectedStreams.forEach((stream)=>{
+        console.log(stream.viewCount)
+      })
+    },10000)
+    let streamnum = 0;
+    this.streams.forEach(stream => {
+      this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+        this.streams[streamnum].viewCount=viewers.viewercount
+      })
+    });
+    setInterval(()=>{
+      streamnum=0;
+      this.streams.forEach(stream => {
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          this.streams[streamnum].viewCount=viewers.viewercount
+        })
+      });
+    },10000)
   }
 
   addToSelectedStreams(stream: any): void {

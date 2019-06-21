@@ -37,11 +37,39 @@ export class OverviewComponent implements OnInit {
     $('.modal').hide();
     this.filteredStreams = this.streams;
     this.fillOverview();
+    setInterval(()=>{this.fillOverview()},10000)
     this.searchService.filter.subscribe((filter)=>{
       this.filteredStreams = this.streams.filter(stream=>{
-        return stream.name.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
+        console.log(stream.streamer.username)
+        return stream.streamer.username.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase())>=0;
       })
     })
+    setInterval(()=>{
+      this.selectedStreams.forEach((stream)=>{
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          stream.viewCount=viewers.viewercount;
+          this.selectedStreams[this.selectedStreams.indexOf(stream)]=stream;
+          streamnum++;
+        })
+      })
+      this.selectedStreams.forEach((stream)=>{
+        console.log(stream.viewCount)
+      })
+    },10000)
+    let streamnum = 0;
+    this.streams.forEach(stream => {
+      this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+        this.streams[streamnum].viewCount=viewers.viewercount
+      })
+    });
+    setInterval(()=>{
+      streamnum=0;
+      this.streams.forEach(stream => {
+        this.dataService.getViewers(stream.stream.key).subscribe((viewers)=>{
+          this.streams[streamnum].viewCount=viewers.viewercount
+        })
+      });
+    },10000)
   }
 
   addToSelectedStreams(stream: any): void {
@@ -87,11 +115,12 @@ export class OverviewComponent implements OnInit {
         if(this.streams.includes(stream)){
           dict.set(stream,true);
         }
-        if (!this.streams.includes(stream)) {
+        if(!(this.streams.filter((x)=>{return x.sessionid==stream.sessionid}).length>0))
+        
           this.streams.push(stream);
+          this.filteredStreams = this.streams;
           dict.set(stream,true);
           console.log(stream);
-        }
         
       });
       this.streams.filter((val)=>{

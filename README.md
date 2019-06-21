@@ -30,16 +30,22 @@
 |   |   |       └── example.guard.ts
 |   |   ├── mocks
 |   |   |   └── example-mock.ts
-|   |   ├── modules
-|   |   |   └── example
-|   |   |       └── example.module.ts
+|   |   ├── models
+|   |   |   └── example.ts
 |   |   ├── app.component.html
 |   |   ├── app.component.scss
 |   |   ├── app.component.spec.ts
 |   |   ├── app.component.ts
 |   |   └── app-routing.module.ts
 |   ├── assets
-|   |   └── img
+|   |   ├── img
+|   |   |   └── example.png
+|   |   ├── scss
+|   |   |   ├── example.scss
+|   |   |   └── example.css
+|   |   ├── js
+|   |   |   └── example.js
+|   |   └── app-routing.module.ts
 |   ├── environments
 |   |   ├── environment.prod.ts
 |   |   └── environment.ts

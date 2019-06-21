@@ -17,7 +17,10 @@ export class AlertService {
         return "You can only select a maximum of four streams. Deselect a stream before selecting another.";
         break;
       }
-
+      case 'noUsername': {
+        return "Please enter a username."
+        break;
+      }
     }
   }
 }

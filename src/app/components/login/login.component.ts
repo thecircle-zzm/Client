@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/services/alert.service';
 
 declare var $: any;
 
+declare var $ : any 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   file: any;
   loading = false;
   returnUrl: string;
+  fileTypeValid = false;
   message: string;
 
   constructor(
@@ -34,7 +36,14 @@ export class LoginComponent implements OnInit {
 
   fileChanged(e) {
     this.file = e.target.files[0];
+    const acceptedTypes = ["key"]
+    if(acceptedTypes.includes(this.file.name.split(".")[this.file.name.split(".").length-1])){
+      this.fileTypeValid = true;
+    } else {
+      this.fileTypeValid = false;
+    }
   }
+
 
   login(text) {
     console.log(text);
@@ -42,8 +51,12 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       let fileReader = new FileReader();
       fileReader.onload = (e) => {
-        this.authenticationService.login(this.model.username, fileReader.result.toString());
-        this.router.navigate(['/overview']);
+        if(this.fileTypeValid && (fileReader.result.toString().includes("-----BEGIN PRIVATE KEY-----")&& fileReader.result.toString().includes("-----END PRIVATE KEY-----"))){
+          this.authenticationService.login(this.model.username, fileReader.result.toString());
+          this.router.navigate(['/overview']);
+        } else {
+          this.changeMessage("File is not valid, please enter the right key file for use with our application");
+        }
       }
       fileReader.readAsText(this.file);
     } else {
@@ -59,4 +72,5 @@ export class LoginComponent implements OnInit {
   closeModal() {
     $('.modal').hide();
   }
+
 }

@@ -1,0 +1,29 @@
+@import '../../../assets/scss/colors.scss', '../../../assets/scss/fonts.scss';
+.blackText{
+    color: $eerie-black;
+    font-family: $roboto;
+}
+.sticky-bottom{
+    position: sticky;
+    bottom:0;
+}
+.container-fluid{
+    height: 50vh;
+    max-height: 50vh;
+    background: $white;
+    padding: 0;
+}
+.list-group{
+    max-width: inherit;
+    max-height: 90%;
+    overflow-y: scroll;
+    .list-group-item{
+        width: inherit;
+    }
+}
+form{
+    position: sticky;
+    bottom:0;
+    top: 95%;
+    align-self: flex-end;
+}

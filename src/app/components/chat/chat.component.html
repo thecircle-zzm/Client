@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <ul class="col list-group overflow-auto" id="itemList" scroll-glue>
+      <li class="list-group-item blackText " *ngFor="let chat of this.messages"><b>{{chat.username}}: </b>{{chat.message}}</li>
+    </ul>
+      <form class="input-group">
+        <input  class="blackText form-control" type="text"name="text" [(ngModel)]="text" placeholder="Send a Message">
+        <span class="input-group-btn">
+          <button class="sm btn btn-danger"(click)="send()">Send</button>
+        </span>
+      </form>
+</div>

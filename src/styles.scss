@@ -1,0 +1,15 @@
+@import 'assets/scss/colors', 'assets/scss/fonts', 'assets/scss/bootstrap';
+
+body {
+  background: $caput-mortuum;
+}
+
+/* buttons */
+
+.btn-danger {
+  background: $red-brown;
+}
+
+.btn-center {
+  margin: 0 auto;
+}

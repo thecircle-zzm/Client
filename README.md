@@ -1,4 +1,4 @@
-# TheCircle Client
+﻿# TheCircle Client
 
 ## Environment Variables
 * `API`(config: `https://localhost:8080`)
